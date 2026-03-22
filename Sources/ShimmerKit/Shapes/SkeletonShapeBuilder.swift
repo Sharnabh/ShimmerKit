@@ -24,17 +24,16 @@ struct AnyShape: Shape, Sendable {
 
 struct SkeletonShapeBuilder {
     
-    @ViewBuilder
     static func shape(for node: SkeletonNode) -> AnyShape {
-        switch node.kind {
-        case .text(let height):
-            return AnyShape(RoundedRectangle(cornerRadius: height / 2))
-            
-        case .image:
+        switch node.shapeStyle {
+        case .automatic:
             return AnyShape(RoundedRectangle(cornerRadius: node.cornerRadius))
-            
-        case .generic:
-            return AnyShape(RoundedRectangle(cornerRadius: node.cornerRadius))
+        case .roundedRectangle(let cornerRadius):
+            return AnyShape(RoundedRectangle(cornerRadius: cornerRadius))
+        case .capsule:
+            return AnyShape(Capsule())
+        case .circle:
+            return AnyShape(Circle())
         }
     }
 }

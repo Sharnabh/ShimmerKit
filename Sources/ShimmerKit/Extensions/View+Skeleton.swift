@@ -11,11 +11,15 @@ public extension View {
     
     func smartSkeleton(
         _ isLoading: Bool,
-        config: ShimmerConfig = ShimmerConfig()
+        config: ShimmerConfig = ShimmerConfig(),
+        includeScopes: [String]? = nil
     ) -> some View {
         Group {
             if isLoading {
-                SmartSkeletonContainer(config: config) {
+                SmartSkeletonContainer(
+                    config: config,
+                    includeScopes: includeScopes
+                ) {
                     self
                 }
             } else {
@@ -26,12 +30,16 @@ public extension View {
     
     func skeletonNode(
         cornerRadius: CGFloat? = nil,
-        kind: SkeletonKind? = nil
+        kind: SkeletonKind? = nil,
+        shape: SkeletonShapeStyle = .automatic,
+        scope: String? = nil
     ) -> some View {
         self.modifier(
             SmartSkeletonModifier(
                 cornerRadius: cornerRadius,
-                kind: kind
+                kind: kind,
+                shapeStyle: shape,
+                scope: scope
             )
         )
     }

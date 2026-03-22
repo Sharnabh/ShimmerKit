@@ -29,4 +29,26 @@ struct SkeletonHeuristics {
             return 8
         }
     }
+    
+    static func defaultShapeStyle(for kind: SkeletonKind, cornerRadius: CGFloat) -> SkeletonShapeStyle {
+        switch kind {
+        case .text:
+            return .capsule
+        case .image, .generic:
+            return .roundedRectangle(cornerRadius: cornerRadius)
+        }
+    }
+    
+    static func resolveShapeStyle(
+        preferred: SkeletonShapeStyle,
+        kind: SkeletonKind,
+        cornerRadius: CGFloat
+    ) -> SkeletonShapeStyle {
+        switch preferred {
+        case .automatic:
+            return defaultShapeStyle(for: kind, cornerRadius: cornerRadius)
+        default:
+            return preferred
+        }
+    }
 }
