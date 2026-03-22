@@ -9,6 +9,17 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [1.0.1] - 2026-03-22
 
+### Added
+- New `shimmerText(config:baseColor:)` API for animated gradient shimmer through a single text view.
+- New `shimmerTextSweep(config:baseColor:)` API for one aligned gradient sweep across multiple text elements in a parent container.
+- New `shimmerTextSweepExclude(_:)` API to opt out specific text views or nested stacks from a parent text sweep.
+
+### Changed
+- `ShimmerConfig` and `ShimmerKit.config(...)` overloads now support optional `textGradient` for text-gradient configuration workflows.
+- Showcase now includes text-gradient and multi-line single-sweep demonstrations.
+
+## [1.0.1] - 2026-03-22
+
 ### Changed
 - Shimmer overlay animation now uses a single container-level gradient pass masked by all skeleton nodes, so placeholders animate as one aligned sweep instead of per-element shimmer phases.
 
@@ -55,6 +66,7 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - Public `smartSkeleton`, `skeletonNode`, and `skeletonID` APIs.
 - Swift Package Manager support.
 
-[Unreleased]: https://github.com/Sharnabh/ShimmerKit/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/Sharnabh/ShimmerKit/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/Sharnabh/ShimmerKit/releases/tag/v1.0.1
 [1.0.0]: https://github.com/Sharnabh/ShimmerKit/releases/tag/v1.0.0
 [0.1.0]: https://github.com/Sharnabh/ShimmerKit/releases/tag/v0.1.0

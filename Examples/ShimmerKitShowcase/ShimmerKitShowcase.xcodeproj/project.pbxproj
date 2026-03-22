@@ -137,7 +137,7 @@
 			mainGroup = CE8F77D62F6FFACF0030DEDF;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				CE8F782B2F7018310030DEDF /* XCLocalSwiftPackageReference "../ShimmerKit" */,
+				CEAE0B242F7053D30036CBDE /* XCLocalSwiftPackageReference "../../../ShimmerKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CE8F77E02F6FFACF0030DEDF /* Products */;
@@ -379,9 +379,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		CE8F782B2F7018310030DEDF /* XCLocalSwiftPackageReference "../ShimmerKit" */ = {
+		CEAE0B242F7053D30036CBDE /* XCLocalSwiftPackageReference "../../../ShimmerKit" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../ShimmerKit;
+			relativePath = ../../../ShimmerKit;
 		};
 /* End XCLocalSwiftPackageReference section */
 

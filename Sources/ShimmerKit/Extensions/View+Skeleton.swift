@@ -27,6 +27,24 @@ public extension View {
             }
         }
     }
+
+    func shimmerText(
+        config: ShimmerConfig = ShimmerConfig(),
+        baseColor: Color = .primary
+    ) -> some View {
+        self.modifier(ShimmerTextModifier(config: config, baseColor: baseColor))
+    }
+
+    func shimmerTextSweep(
+        config: ShimmerConfig = ShimmerConfig(),
+        baseColor: Color = .primary
+    ) -> some View {
+        self.modifier(ShimmerTextSweepModifier(config: config, baseColor: baseColor))
+    }
+
+    func shimmerTextSweepExclude(_ isExcluded: Bool = true) -> some View {
+        self.modifier(ShimmerTextSweepExclusionModifier(isExcluded: isExcluded))
+    }
     
     func skeletonNode(
         cornerRadius: CGFloat? = nil,

@@ -1,4 +1,5 @@
 import XCTest
+import SwiftUI
 @testable import ShimmerKit
 
 final class ShimmerKitConfigTests: XCTestCase {
@@ -75,5 +76,20 @@ final class ShimmerKitConfigTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(phase1, 0)
         XCTAssertLessThan(phase1, 1)
         XCTAssertEqual(phase1, phase2, accuracy: 0.000_001)
+    }
+
+    func testTextGradientCanBeConfiguredViaBothOverloads() {
+        let directGradient = Gradient(colors: [.red, .orange])
+        let direct = ShimmerKit.config(textGradient: directGradient)
+
+        XCTAssertEqual(direct.textGradient, directGradient)
+
+        let shimmerColorGradient = Gradient(colors: [.purple, .pink])
+        let shimmerColorConfig = ShimmerKit.config(
+            shimmerColor: .white,
+            textGradient: shimmerColorGradient
+        )
+
+        XCTAssertEqual(shimmerColorConfig.textGradient, shimmerColorGradient)
     }
 }

@@ -65,6 +65,7 @@ public enum ShimmerKit {
             Color.white.opacity(0.35),
             .clear
         ]),
+        textGradient: Gradient? = nil,
         skeletonColor: Color = Color.gray.opacity(0.25),
         speed: Double = 1.2,
         angle: Angle = .degrees(20),
@@ -74,6 +75,7 @@ public enum ShimmerKit {
     ) -> ShimmerConfig {
         ShimmerConfig(
             gradient: gradient,
+            textGradient: textGradient,
             skeletonColor: skeletonColor,
             speed: speed,
             angle: angle,
@@ -86,6 +88,7 @@ public enum ShimmerKit {
     /// Create a shimmer configuration using a single shimmer highlight color.
     public static func config(
         shimmerColor: Color,
+        textGradient: Gradient? = nil,
         skeletonColor: Color = Color.gray.opacity(0.25),
         shimmerOpacity: Double = 0.35,
         speed: Double = 1.2,
@@ -96,6 +99,7 @@ public enum ShimmerKit {
     ) -> ShimmerConfig {
         ShimmerConfig(
             shimmerColor: shimmerColor,
+            textGradient: textGradient,
             skeletonColor: skeletonColor,
             shimmerOpacity: shimmerOpacity,
             speed: speed,

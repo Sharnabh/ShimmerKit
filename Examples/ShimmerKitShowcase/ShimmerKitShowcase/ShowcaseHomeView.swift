@@ -29,11 +29,11 @@ struct ShowcaseHomeView: View {
                 NavigationLink("6. Preset profiles + config constructors") {
                     DemoProfilesView()
                 }
-                NavigationLink("7. API checklist") {
-                    ApiChecklistView()
-                }
-                NavigationLink("8. Apple .redacted vs ShimmerKit") {
+                NavigationLink("7. Apple .redacted vs ShimmerKit") {
                     DemoRedactedComparisonView()
+                }
+                NavigationLink("8. Text gradient") {
+                    DemoTextGradientView()
                 }
             }
         }

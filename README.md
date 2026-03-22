@@ -86,6 +86,74 @@ content.smartSkeleton(
 )
 ```
 
+#### `shimmerText(config:baseColor:)`
+
+```swift
+func shimmerText(
+    config: ShimmerConfig = ShimmerConfig(),
+    baseColor: Color = .primary
+) -> some View
+```
+
+- Applies animated shimmer directly through a single text view.
+- Independent of `smartSkeleton` loading flow.
+
+Example:
+
+```swift
+Text("Hello")
+    .font(.largeTitle.weight(.bold))
+    .shimmerText(
+        config: ShimmerConfig(
+            gradient: Gradient(colors: [.clear, .pink.opacity(0.9), .orange.opacity(0.9), .clear]),
+            speed: 1.0,
+            angle: .degrees(20)
+        ),
+        baseColor: .gray.opacity(0.35)
+    )
+```
+
+#### `shimmerTextSweep(config:baseColor:)`
+
+```swift
+func shimmerTextSweep(
+    config: ShimmerConfig = ShimmerConfig(),
+    baseColor: Color = .primary
+) -> some View
+```
+
+- Applies one aligned sweep across all text inside a parent container.
+
+Example:
+
+```swift
+VStack(alignment: .leading) {
+    Text("Headline")
+    Text("Subtitle")
+}
+.shimmerTextSweep(config: ShimmerKit.config(.subtle), baseColor: .gray.opacity(0.3))
+```
+
+#### `shimmerTextSweepExclude(_:)`
+
+```swift
+func shimmerTextSweepExclude(_ isExcluded: Bool = true) -> some View
+```
+
+- Excludes a specific text view or nested stack from the parent `shimmerTextSweep` effect.
+
+Example:
+
+```swift
+VStack(alignment: .leading) {
+    Text("Swept text")
+
+    Text("No sweep here")
+        .shimmerTextSweepExclude()
+}
+.shimmerTextSweep(config: ShimmerKit.config(.subtle))
+```
+
 #### `skeletonNode(cornerRadius:kind:shape:scope:)`
 
 ```swift
@@ -168,6 +236,7 @@ content.smartSkeleton(isLoading, config: ShimmerKit.config(.subtle))
 ```swift
 public static func config(
     gradient: Gradient = Gradient(colors: [.clear, Color.white.opacity(0.35), .clear]),
+    textGradient: Gradient? = nil,
     skeletonColor: Color = Color.gray.opacity(0.25),
     speed: Double = 1.2,
     angle: Angle = .degrees(20),
@@ -196,6 +265,7 @@ let config = ShimmerKit.config(
 ```swift
 public static func config(
     shimmerColor: Color,
+    textGradient: Gradient? = nil,
     skeletonColor: Color = Color.gray.opacity(0.25),
     shimmerOpacity: Double = 0.35,
     speed: Double = 1.2,
@@ -230,6 +300,7 @@ let config = ShimmerKit.config(
 #### Stored properties
 
 - `gradient: Gradient`
+- `textGradient: Gradient?`
 - `skeletonColor: Color`
 - `speed: Double`
 - `angle: Angle`
@@ -242,6 +313,7 @@ let config = ShimmerKit.config(
 ```swift
 public init(
     gradient: Gradient = Gradient(colors: [.clear, Color.white.opacity(0.35), .clear]),
+    textGradient: Gradient? = nil,
     skeletonColor: Color = Color.gray.opacity(0.25),
     speed: Double = 1.2,
     angle: Angle = .degrees(20),
@@ -256,6 +328,7 @@ public init(
 ```swift
 public init(
     shimmerColor: Color,
+    textGradient: Gradient? = nil,
     skeletonColor: Color = Color.gray.opacity(0.25),
     shimmerOpacity: Double = 0.35,
     speed: Double = 1.2,
@@ -911,6 +984,61 @@ Profile intent:
 * `.subtle` → softer highlight + slower animation
 * `.feedLoading` → stronger shimmer for list/feed placeholders
 * `.detailPage` → richer shimmer with advanced toggles enabled
+
+### 24) `shimmerText(config:baseColor:)` for single text
+
+```swift
+Text("Hello")
+    .font(.system(size: 56, weight: .heavy, design: .rounded))
+    .shimmerText(
+        config: ShimmerConfig(
+            gradient: Gradient(colors: [.clear, .pink.opacity(0.9), .orange.opacity(0.9), .clear]),
+            speed: 1.0,
+            angle: .degrees(20)
+        ),
+        baseColor: .gray.opacity(0.35)
+    )
+```
+
+### 25) `shimmerTextSweep(config:baseColor:)` for one aligned sweep over mixed text layouts
+
+```swift
+VStack(alignment: .leading, spacing: 10) {
+    Text("Title").font(.title3.weight(.bold))
+
+    HStack {
+        VStack(alignment: .leading) {
+            Text("Left")
+            Text("Stack")
+        }
+        Spacer()
+        Text("Right")
+    }
+}
+.shimmerTextSweep(
+    config: ShimmerConfig(
+        gradient: Gradient(colors: [.clear, .cyan.opacity(0.9), .mint.opacity(0.9), .clear]),
+        speed: 1.2,
+        angle: .degrees(28)
+    ),
+    baseColor: .gray.opacity(0.32)
+)
+```
+
+### 26) `shimmerTextSweepExclude(_:)` to opt out specific text/stack
+
+```swift
+VStack(alignment: .leading) {
+    VStack(alignment: .leading) {
+        Text("Excluded block")
+        Text("No shimmer here")
+    }
+    .shimmerTextSweepExclude()
+
+    Text("Still shimmering")
+}
+.shimmerTextSweep(config: ShimmerKit.config(.subtle))
+```
 
 ---
 
