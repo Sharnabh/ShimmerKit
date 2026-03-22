@@ -7,6 +7,11 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-03-22
+
+### Changed
+- Shimmer overlay animation now uses a single container-level gradient pass masked by all skeleton nodes, so placeholders animate as one aligned sweep instead of per-element shimmer phases.
+
 ## [1.0.0] - 2026-03-22
 
 ### Added
