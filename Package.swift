@@ -20,6 +20,10 @@ let package = Package(
         .target(
             name: "ShimmerKit",
             dependencies: []
+        ),
+        .testTarget(
+            name: "ShimmerKitTests",
+            dependencies: ["ShimmerKit"]
         )
     ]
 )
