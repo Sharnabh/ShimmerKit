@@ -10,3 +10,4 @@ DerivedData/
 
 #Ignore vscode AI rules
 .github/instructions/codacy.instructions.md
+/RELEASE_CHECKLIST.md

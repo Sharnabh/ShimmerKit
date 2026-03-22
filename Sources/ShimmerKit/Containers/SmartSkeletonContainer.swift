@@ -36,6 +36,7 @@ struct SmartSkeletonContainer<Content: View>: View {
         .overlay(alignment: .topLeading) {
             GeometryReader { proxy in
                 let containerFrame = proxy.frame(in: .global)
+                let containerSize = proxy.size
                 
                 ZStack(alignment: .topLeading) {
                     ForEach(renderNodes) { renderNode in
@@ -47,16 +48,29 @@ struct SmartSkeletonContainer<Content: View>: View {
                         
                         SkeletonShapeBuilder.shape(for: node)
                             .fill(config.skeletonColor)
-                            .overlay(
-                                ShimmerRenderer(config: config)
-                                    .frame(width: localFrame.width, height: localFrame.height)
-                                    .mask(
-                                        SkeletonShapeBuilder.shape(for: node)
-                                    )
-                            )
                             .frame(width: localFrame.width, height: localFrame.height)
                             .position(x: localFrame.midX, y: localFrame.midY)
                     }
+                }
+                .overlay(alignment: .topLeading) {
+                    ShimmerRenderer(config: config)
+                        .frame(width: containerSize.width, height: containerSize.height)
+                        .mask(
+                            ZStack(alignment: .topLeading) {
+                                ForEach(renderNodes) { renderNode in
+                                    let node = renderNode.node
+                                    let localFrame = node.frame.offsetBy(
+                                        dx: -containerFrame.minX,
+                                        dy: -containerFrame.minY
+                                    )
+                                    
+                                    SkeletonShapeBuilder.shape(for: node)
+                                        .fill(Color.white)
+                                        .frame(width: localFrame.width, height: localFrame.height)
+                                        .position(x: localFrame.midX, y: localFrame.midY)
+                                }
+                            }
+                        )
                 }
             }
         }
