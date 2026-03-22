@@ -5,10 +5,9 @@ All notable changes to this project are documented in this file.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-> Tag status: this repository currently has no published git tags yet.
-> Create and push `v0.1.0` for the first official release.
-
 ## [Unreleased]
+
+## [1.0.0] - 2026-03-22
 
 ### Added
 - Configurable shimmer direction via `ShimmerConfig.angle` in rendering.
@@ -51,5 +50,6 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - Public `smartSkeleton`, `skeletonNode`, and `skeletonID` APIs.
 - Swift Package Manager support.
 
-[Unreleased]: https://github.com/Sharnabh/ShimmerKit/commits/main
-[0.1.0]: https://github.com/Sharnabh/ShimmerKit/releases
+[Unreleased]: https://github.com/Sharnabh/ShimmerKit/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/Sharnabh/ShimmerKit/releases/tag/v1.0.0
+[0.1.0]: https://github.com/Sharnabh/ShimmerKit/releases/tag/v0.1.0
