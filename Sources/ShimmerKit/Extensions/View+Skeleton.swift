@@ -8,7 +8,7 @@
 import SwiftUI
 
 public extension View {
-    
+
     func smartSkeleton(
         _ isLoading: Bool,
         config: ShimmerConfig = ShimmerConfig(),
@@ -45,7 +45,7 @@ public extension View {
     func shimmerTextSweepExclude(_ isExcluded: Bool = true) -> some View {
         self.modifier(ShimmerTextSweepExclusionModifier(isExcluded: isExcluded))
     }
-    
+
     func skeletonNode(
         cornerRadius: CGFloat? = nil,
         kind: SkeletonKind? = nil,
@@ -61,7 +61,7 @@ public extension View {
             )
         )
     }
-    
+
     func skeletonID(_ id: AnyHashable) -> some View {
         self.modifier(StableSkeletonIDModifier(id: id))
     }
