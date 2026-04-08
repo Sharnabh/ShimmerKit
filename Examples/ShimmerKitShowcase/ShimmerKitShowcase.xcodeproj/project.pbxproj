@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE21ECC02F865B4400E59038 /* ShimmerKit in Frameworks */ = {isa = PBXBuildFile; productRef = CE21ECBF2F865B4400E59038 /* ShimmerKit */; };
 		CE8F78072F6FFB760030DEDF /* ShimmerKit in Frameworks */ = {isa = PBXBuildFile; productRef = CE8F78062F6FFB760030DEDF /* ShimmerKit */; };
 		CE8F780A2F7009AF0030DEDF /* ShimmerKit in Frameworks */ = {isa = PBXBuildFile; productRef = CE8F78092F7009AF0030DEDF /* ShimmerKit */; };
 		CE8F780D2F700A550030DEDF /* ShimmerKit in Frameworks */ = {isa = PBXBuildFile; productRef = CE8F780C2F700A550030DEDF /* ShimmerKit */; };
@@ -40,6 +41,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE8F78072F6FFB760030DEDF /* ShimmerKit in Frameworks */,
+				CE21ECC02F865B4400E59038 /* ShimmerKit in Frameworks */,
 				CE8F78192F700E360030DEDF /* ShimmerKit in Frameworks */,
 				CE8F78162F700D740030DEDF /* ShimmerKit in Frameworks */,
 				CE8F780D2F700A550030DEDF /* ShimmerKit in Frameworks */,
@@ -107,6 +109,7 @@
 				CE8F78262F7016EF0030DEDF /* ShimmerKit */,
 				CE8F78292F7017280030DEDF /* ShimmerKit */,
 				CE8F782C2F7018310030DEDF /* ShimmerKit */,
+				CE21ECBF2F865B4400E59038 /* ShimmerKit */,
 			);
 			productName = ShimmerKitShowcase;
 			productReference = CE8F77DF2F6FFACF0030DEDF /* ShimmerKitShowcase.app */;
@@ -137,7 +140,7 @@
 			mainGroup = CE8F77D62F6FFACF0030DEDF;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				CEAE0B242F7053D30036CBDE /* XCLocalSwiftPackageReference "../../../ShimmerKit" */,
+				CE21ECBE2F865B4400E59038 /* XCLocalSwiftPackageReference "../../../ShimmerKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CE8F77E02F6FFACF0030DEDF /* Products */;
@@ -379,13 +382,17 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		CEAE0B242F7053D30036CBDE /* XCLocalSwiftPackageReference "../../../ShimmerKit" */ = {
+		CE21ECBE2F865B4400E59038 /* XCLocalSwiftPackageReference "../../../ShimmerKit" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = ../../../ShimmerKit;
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		CE21ECBF2F865B4400E59038 /* ShimmerKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ShimmerKit;
+		};
 		CE8F78062F6FFB760030DEDF /* ShimmerKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ShimmerKit;

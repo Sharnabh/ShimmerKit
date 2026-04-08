@@ -35,6 +35,9 @@ struct ShowcaseHomeView: View {
                 NavigationLink("8. Text gradient") {
                     DemoTextGradientView()
                 }
+                NavigationLink("9. Whole-view loading (Task + TaskGroup)") {
+                    DemoWholeViewLoadingView()
+                }
             }
         }
         .navigationTitle("ShimmerKit Showcase")

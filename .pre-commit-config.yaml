@@ -13,4 +13,5 @@ repos:
         name: swift test
         entry: swift test
         language: system
+        always_run: true
         pass_filenames: false

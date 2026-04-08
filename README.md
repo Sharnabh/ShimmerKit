@@ -52,7 +52,7 @@ struct ProductView: View {
 
 For a single app that demonstrates every public API and feature toggle, see:
 
-- `Examples/ShimmerKitShowcaseApp/`
+- `Examples/ShimmerKitShowcase/`
 
 ---
 
@@ -85,6 +85,44 @@ content.smartSkeleton(
     includeScopes: ["header", "body"]
 )
 ```
+
+#### `shimmerLoading(_:config:placeholder:)`
+
+```swift
+func shimmerLoading<Placeholder: View>(
+    _ isLoading: Bool,
+    config: ShimmerConfig = ShimmerConfig(),
+    @ViewBuilder placeholder: () -> Placeholder
+) -> some View
+```
+
+- Replaces the entire original content while loading.
+- Shows only your custom placeholder (text, shapes, or any view) with shimmer applied.
+
+Example:
+
+```swift
+content.shimmerLoading(isLoading, config: ShimmerKit.config(.feedLoading)) {
+    VStack(alignment: .leading, spacing: 10) {
+        Text("Loading feed")
+        RoundedRectangle(cornerRadius: 8).frame(height: 54)
+        RoundedRectangle(cornerRadius: 8).frame(height: 54)
+    }
+}
+```
+
+#### `shimmerLoading(_:config:placeholder:)` (controller-driven)
+
+```swift
+func shimmerLoading<Placeholder: View>(
+    _ controller: ShimmerLoadingController,
+    config: ShimmerConfig = ShimmerConfig(),
+    @ViewBuilder placeholder: () -> Placeholder
+) -> some View
+```
+
+- Use this when loading state is shared across screens.
+- Useful for showing loading in a home/root container while work runs in child views.
 
 #### `shimmerText(config:baseColor:)`
 
@@ -199,6 +237,80 @@ ForEach(items, id: \.id) { item in
 ---
 
 ### `ShimmerKit` APIs
+
+### `ShimmerLoadingController`
+
+```swift
+@MainActor
+public final class ShimmerLoadingController: ObservableObject
+```
+
+Purpose:
+
+- Tracks concurrent async operations.
+- Keeps `isLoading` true until the last operation finishes.
+
+Key APIs:
+
+```swift
+public func beginLoading()
+public func endLoading()
+public func run<T>(_ operation: @Sendable () async throws -> T) async rethrows -> T
+public func runTaskGroup<ChildTaskResult: Sendable, GroupResult>(
+    of childTaskResultType: ChildTaskResult.Type,
+    returning returnType: GroupResult.Type,
+    body: (inout TaskGroup<ChildTaskResult>) async -> GroupResult
+) async -> GroupResult
+public func runThrowingTaskGroup<ChildTaskResult: Sendable, GroupResult>(
+    of childTaskResultType: ChildTaskResult.Type,
+    returning returnType: GroupResult.Type,
+    body: (inout ThrowingTaskGroup<ChildTaskResult, any Error>) async throws -> GroupResult
+) async throws -> GroupResult
+```
+
+Root-level loading example:
+
+```swift
+@StateObject private var loadingController = ShimmerLoadingController()
+
+NavigationStack {
+    HomeView()
+}
+.shimmerLoading(loadingController, config: ShimmerKit.config(.detailPage)) {
+    Text("Preparing your content")
+}
+```
+
+Child-view work example with multiple calls in one task:
+
+```swift
+Task {
+    let payload = try await loadingController.run {
+        let profile = try await api.loadProfile()
+        let permissions = try await api.loadPermissions()
+        let feed = try await api.loadFeed()
+        return (profile, permissions, feed)
+    }
+    // Update UI
+}
+```
+
+Child-view task-group example:
+
+```swift
+Task {
+    let values = await loadingController.runTaskGroup(of: String.self, returning: [String].self) { group in
+        group.addTask { await api.loadSectionA() }
+        group.addTask { await api.loadSectionB() }
+        group.addTask { await api.loadSectionC() }
+
+        var output: [String] = []
+        for await value in group { output.append(value) }
+        return output
+    }
+    // Update UI
+}
+```
 
 #### `ShimmerKit.defaultConfig`
 
@@ -383,7 +495,7 @@ public enum SkeletonShapeStyle: Hashable, Sendable {
 
 ```swift
 public struct SkeletonNode: Identifiable, Hashable, Sendable {
-    public let id: UUID
+    public var id: String { get }
     public var frame: CGRect
     public var cornerRadius: CGFloat
     public var kind: SkeletonKind
