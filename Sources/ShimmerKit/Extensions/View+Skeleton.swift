@@ -8,7 +8,7 @@
 import SwiftUI
 
 public extension View {
-    
+
     func smartSkeleton(
         _ isLoading: Bool,
         config: ShimmerConfig = ShimmerConfig(),
@@ -28,6 +28,34 @@ public extension View {
         }
     }
 
+    func shimmerLoading<Placeholder: View>(
+        _ isLoading: Bool,
+        config: ShimmerConfig = ShimmerConfig(),
+        @ViewBuilder placeholder: () -> Placeholder
+    ) -> some View {
+        self.modifier(
+            WholeViewShimmerLoadingModifier(
+                isLoading: isLoading,
+                config: config,
+                placeholder: placeholder()
+            )
+        )
+    }
+
+    func shimmerLoading<Placeholder: View>(
+        _ controller: ShimmerLoadingController,
+        config: ShimmerConfig = ShimmerConfig(),
+        @ViewBuilder placeholder: () -> Placeholder
+    ) -> some View {
+        self.modifier(
+            WholeViewShimmerLoadingModifier(
+                isLoading: controller.isLoading,
+                config: config,
+                placeholder: placeholder()
+            )
+        )
+    }
+
     func shimmerText(
         config: ShimmerConfig = ShimmerConfig(),
         baseColor: Color = .primary
@@ -45,7 +73,7 @@ public extension View {
     func shimmerTextSweepExclude(_ isExcluded: Bool = true) -> some View {
         self.modifier(ShimmerTextSweepExclusionModifier(isExcluded: isExcluded))
     }
-    
+
     func skeletonNode(
         cornerRadius: CGFloat? = nil,
         kind: SkeletonKind? = nil,
@@ -61,7 +89,7 @@ public extension View {
             )
         )
     }
-    
+
     func skeletonID(_ id: AnyHashable) -> some View {
         self.modifier(StableSkeletonIDModifier(id: id))
     }

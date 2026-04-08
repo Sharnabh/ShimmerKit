@@ -85,7 +85,7 @@ struct DemoTextGradientView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(.thinMaterial)
                 .clipShape(RoundedRectangle(cornerRadius: 16))
-                
+
                 VStack(alignment: .leading, spacing: 12) {
                     Text("Single sweep across multiple text blocks")
                         .font(.headline)

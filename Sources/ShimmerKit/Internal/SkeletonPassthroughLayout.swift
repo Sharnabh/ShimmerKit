@@ -16,7 +16,7 @@ struct SkeletonPassthroughLayout: Layout {
         guard let first = subviews.first else { return .zero }
         return first.sizeThatFits(proposal)
     }
-    
+
     func placeSubviews(
         in bounds: CGRect,
         proposal: ProposedViewSize,

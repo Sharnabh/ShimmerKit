@@ -18,13 +18,13 @@ public struct SkeletonNode: Identifiable, Hashable, Sendable {
             scope: scope
         )
     }
-    
+
     public var frame: CGRect
     public var cornerRadius: CGFloat
     public var kind: SkeletonKind
     public var shapeStyle: SkeletonShapeStyle
     public var scope: String?
-    
+
     private static func stableID(
         frame: CGRect,
         cornerRadius: CGFloat,
@@ -38,7 +38,7 @@ public struct SkeletonNode: Identifiable, Hashable, Sendable {
             quantized(frame.width),
             quantized(frame.height)
         ].map(String.init).joined(separator: ":")
-        
+
         let kindToken: String
         switch kind {
         case .text(let lineHeight):
@@ -48,7 +48,7 @@ public struct SkeletonNode: Identifiable, Hashable, Sendable {
         case .generic:
             kindToken = "generic"
         }
-        
+
         let shapeToken: String
         switch shapeStyle {
         case .automatic:
@@ -60,11 +60,11 @@ public struct SkeletonNode: Identifiable, Hashable, Sendable {
         case .circle:
             shapeToken = "circle"
         }
-        
+
         let scopeToken = scope ?? "_"
         return "\(frameToken)|\(kindToken)|\(shapeToken)|r:\(quantized(cornerRadius))|s:\(scopeToken)"
     }
-    
+
     private static func quantized(_ value: CGFloat) -> Int {
         Int((value * 100).rounded())
     }

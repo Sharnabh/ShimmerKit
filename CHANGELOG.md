@@ -7,6 +7,18 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+### Added
+- New whole-view loading API `shimmerLoading(_:config:placeholder:)` to fully replace content with a custom shimmer placeholder while loading.
+- New controller-driven API `shimmerLoading(_:config:placeholder:)` overload that accepts `ShimmerLoadingController` for shared loading state.
+- New `ShimmerLoadingController` type with async helpers:
+	- `run(_:)` for single async workflows
+	- `runTaskGroup(of:returning:body:)` for task-group workflows
+	- `runThrowingTaskGroup(of:returning:body:)` for throwing task groups
+- New showcase screen for whole-view loading with both Task and TaskGroup examples.
+
+### Changed
+- Showcase app now demonstrates root-level shimmer rendering driven by a shared loading controller, so child-view async work can present loading from the home/app container.
+
 ## [1.0.1] - 2026-03-22
 
 ### Added

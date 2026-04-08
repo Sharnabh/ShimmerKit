@@ -9,7 +9,7 @@ import SwiftUI
 
 struct StableSkeletonIDModifier: ViewModifier {
     let id: AnyHashable
-    
+
     func body(content: Content) -> some View {
         content.id(id)
     }
