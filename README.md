@@ -54,6 +54,12 @@ For a single app that demonstrates every public API and feature toggle, see:
 
 - `Examples/ShimmerKitShowcase/`
 
+## What's New in 1.2.2
+
+- Added whole-view loading overloads with a separate non-shimmering background layer.
+- Improved whole-view loading lifecycle so original content remains mounted (hidden) during loading, avoiding unintended `.task` cancellation.
+- Improved loading overlay alignment to top-leading for predictable top anchoring.
+
 ---
 
 ## Public API Reference
@@ -123,6 +129,51 @@ func shimmerLoading<Placeholder: View>(
 
 - Use this when loading state is shared across screens.
 - Useful for showing loading in a home/root container while work runs in child views.
+
+#### `shimmerLoading(_:config:background:placeholder:)`
+
+```swift
+func shimmerLoading<Background: View, Placeholder: View>(
+    _ isLoading: Bool,
+    config: ShimmerConfig = ShimmerConfig(),
+    @ViewBuilder background: () -> Background,
+    @ViewBuilder placeholder: () -> Placeholder
+) -> some View
+```
+
+- Renders a non-shimmering background while loading.
+- Applies shimmer only to the placeholder layer.
+
+Example:
+
+```swift
+content.shimmerLoading(
+    isLoading,
+    config: ShimmerKit.config(.feedLoading),
+    background: {
+        Color("LoadingBackground")
+    },
+    placeholder: {
+        VStack(spacing: 12) {
+            RoundedRectangle(cornerRadius: 10).frame(height: 40)
+            RoundedRectangle(cornerRadius: 10).frame(height: 140)
+        }
+    }
+)
+```
+
+#### `shimmerLoading(_:config:background:placeholder:)` (controller-driven)
+
+```swift
+func shimmerLoading<Background: View, Placeholder: View>(
+    _ controller: ShimmerLoadingController,
+    config: ShimmerConfig = ShimmerConfig(),
+    @ViewBuilder background: () -> Background,
+    @ViewBuilder placeholder: () -> Placeholder
+) -> some View
+```
+
+- Same behavior as above, but tied to shared loading controller state.
 
 #### `shimmerText(config:baseColor:)`
 

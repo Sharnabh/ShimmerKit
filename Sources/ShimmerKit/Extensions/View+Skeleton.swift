@@ -37,6 +37,23 @@ public extension View {
             WholeViewShimmerLoadingModifier(
                 isLoading: isLoading,
                 config: config,
+                background: EmptyView(),
+                placeholder: placeholder()
+            )
+        )
+    }
+
+    func shimmerLoading<Background: View, Placeholder: View>(
+        _ isLoading: Bool,
+        config: ShimmerConfig = ShimmerConfig(),
+        @ViewBuilder background: () -> Background,
+        @ViewBuilder placeholder: () -> Placeholder
+    ) -> some View {
+        self.modifier(
+            WholeViewShimmerLoadingModifier(
+                isLoading: isLoading,
+                config: config,
+                background: background(),
                 placeholder: placeholder()
             )
         )
@@ -51,6 +68,23 @@ public extension View {
             WholeViewShimmerLoadingModifier(
                 isLoading: controller.isLoading,
                 config: config,
+                background: EmptyView(),
+                placeholder: placeholder()
+            )
+        )
+    }
+
+    func shimmerLoading<Background: View, Placeholder: View>(
+        _ controller: ShimmerLoadingController,
+        config: ShimmerConfig = ShimmerConfig(),
+        @ViewBuilder background: () -> Background,
+        @ViewBuilder placeholder: () -> Placeholder
+    ) -> some View {
+        self.modifier(
+            WholeViewShimmerLoadingModifier(
+                isLoading: controller.isLoading,
+                config: config,
+                background: background(),
                 placeholder: placeholder()
             )
         )
