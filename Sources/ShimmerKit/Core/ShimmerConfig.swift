@@ -17,7 +17,7 @@ public struct ShimmerConfig: @unchecked Sendable {
     public var splitMultilineText: Bool
     public var enableSemanticGrouping: Bool
     public var useLayoutProtocolIntegration: Bool
-    
+
     public init(
         gradient: Gradient = Gradient(colors: [
             .clear,
@@ -41,7 +41,7 @@ public struct ShimmerConfig: @unchecked Sendable {
         self.enableSemanticGrouping = enableSemanticGrouping
         self.useLayoutProtocolIntegration = useLayoutProtocolIntegration
     }
-    
+
     public init(
         shimmerColor: Color,
         textGradient: Gradient? = nil,
