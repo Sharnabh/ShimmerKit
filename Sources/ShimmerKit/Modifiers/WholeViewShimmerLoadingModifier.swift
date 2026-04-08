@@ -13,19 +13,20 @@ struct WholeViewShimmerLoadingModifier<Placeholder: View>: ViewModifier {
     let placeholder: Placeholder
 
     func body(content: Content) -> some View {
-        Group {
-            if isLoading {
-                placeholder
-                    .overlay {
-                        GeometryReader { proxy in
-                            ShimmerRenderer(config: config)
-                                .frame(width: proxy.size.width, height: proxy.size.height)
-                                .mask(placeholder)
+        content
+            .opacity(isLoading ? 0 : 1)
+            .allowsHitTesting(!isLoading)
+            .overlay {
+                if isLoading {
+                    placeholder
+                        .overlay {
+                            GeometryReader { proxy in
+                                ShimmerRenderer(config: config)
+                                    .frame(width: proxy.size.width, height: proxy.size.height)
+                                    .mask(placeholder)
+                            }
                         }
-                    }
-            } else {
-                content
+                }
             }
-        }
     }
 }
