@@ -13,12 +13,12 @@ struct HomeView: View {
     @StateObject private var viewModel = HomeViewModel()
     @EnvironmentObject private var addressViewModel: AddressViewModel
     @EnvironmentObject var router: AppRouter
-    
+
     @State private var isFetching = false
-    
+
     let bridgeGap: CGFloat = 16
     private let loadingConfig = ShimmerKit.config(.feedLoading)
-    
+
     var body: some View {
         ScrollView{
             VStack(spacing: 0) {
@@ -31,7 +31,7 @@ struct HomeView: View {
                                     .scaledToFit()
                                     .frame(height: 12)
                                     .padding(.horizontal, 8)
-                                
+
                                 if !addressViewModel.addressList.isEmpty {
                                     let address = addressViewModel.addressList.first(where: {$0.isDefault == "1"})?.address ?? ""
                                     Text("\(address)")
@@ -46,9 +46,9 @@ struct HomeView: View {
                                         .frame(maxWidth: .infinity)
                                         .padding(.vertical, 10)
                                 }
-                                
+
                                 Spacer()
-                                
+
                                 Image(systemName: "chevron.forward")
                                     .font(.system(size: 12, weight: .semibold))
                                     .foregroundStyle(Color.white)
@@ -61,7 +61,7 @@ struct HomeView: View {
                         }
                         .padding(.vertical, 16)
                     }
-                    
+
                     VStack(spacing: 0) {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack(spacing: 16) {
@@ -80,39 +80,39 @@ struct HomeView: View {
                             .padding(.horizontal, 16)
                             .padding(.bottom, bridgeGap)
                         }
-                        
+
                         VStack(spacing: 0) {
                             NavigationLink(value: AppRoute.searchProduct) {
                                 SearchBarButton()
                             }
                             .buttonStyle(.plain)
-                            
+
                             if let banners = viewModel.selectedSection?.banners {
                                 PromoCarouselView(banners: banners)
                                     .padding(.vertical, 16)
                             }
-                            
+
                             HStack {
                                 Text("Categories")
                                     .font(.system(size: 16, weight: .semibold))
                                     .foregroundStyle(.white)
-                                
+
                                 Spacer()
-                                
+
                                 Button {
                                     router.selectedTab = .explore
                                 } label: {
                                     Text("See all")
                                         .font(.system(size: 14, weight: .medium))
                                         .foregroundStyle(.white)
-                                    
+
                                     Image(systemName: "chevron.forward")
                                         .font(.system(size: 12, weight: .semibold))
                                         .foregroundStyle(Color.white)
                                 }
                             }
                             .padding(.horizontal, 16)
-                            
+
                             if let subCategories = viewModel.selectedSection?.categories {
                                 ScrollView(.horizontal, showsIndicators: false) {
                                     HStack(alignment: .top, spacing: 0) {
@@ -149,13 +149,13 @@ struct HomeView: View {
                     )
                 )
                 .padding(.bottom, 28)
-                
+
                 VStack(spacing: 24) {
                     ForEach(viewModel.productModules) { module in
-                        
+
                         let shouldShowCategories = (module.moduleId == 8)
                         let categoriesToPass = shouldShowCategories ? viewModel.featuredCategories.flatMap { $0.items } : []
-                        
+
                         ProductModule(
                             title: module.title,
                             products: module.productData,
@@ -168,7 +168,7 @@ struct HomeView: View {
                             isLoading: viewModel.isLoading
                         )
                     }
-                    
+
                     ForEach(viewModel.featuredBrands) { brand in
                         let allBrands = viewModel.featuredBrands.flatMap { $0.items }
                         BrandGridModule(title: brand.title, brands: allBrands)
@@ -211,7 +211,7 @@ struct CategoryTabButton: View {
     let isSelected: Bool
     let gap: CGFloat
     let action: () -> Void
-    
+
     var body: some View {
         Button(action: action) {
             Text(title)
@@ -239,47 +239,47 @@ struct CategoryTabButton: View {
 struct BridgedTabShape: Shape {
     var radius: CGFloat = 15
     var gap: CGFloat
-    
+
     func path(in rect: CGRect) -> Path {
         var path = Path()
-        
+
         path.move(to: CGPoint(x: rect.minX - radius, y: rect.maxY + gap))
-        
+
         path.addQuadCurve(to: CGPoint(x: rect.minX, y: rect.maxY + gap - radius),
                           control: CGPoint(x: rect.minX, y: rect.maxY + gap))
-        
+
         path.addLine(to: CGPoint(x: rect.minX, y: rect.minY + radius))
-        
+
         path.addArc(center: CGPoint(x: rect.minX + radius, y: rect.minY + radius),
                     radius: radius, startAngle: .degrees(180), endAngle: .degrees(270), clockwise: false)
-        
+
         path.addArc(center: CGPoint(x: rect.maxX - radius, y: rect.minY + radius),
                     radius: radius, startAngle: .degrees(270), endAngle: .degrees(0), clockwise: false)
-        
+
         path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY + gap - radius))
-        
+
         path.addQuadCurve(to: CGPoint(x: rect.maxX + radius, y: rect.maxY + gap),
                           control: CGPoint(x: rect.maxX, y: rect.maxY + gap))
-        
+
         path.addLine(to: CGPoint(x: rect.minX - radius, y: rect.maxY + gap))
-        
+
         return path
     }
 }
 
 struct PromoCarouselView: View {
     let banners: [HomeBanner]
-    
+
     // 1. Add state to track the active banner
     @State private var currentBannerIndex: Int = 0
-    
+
     var body: some View {
         // 2. Bind the TabView to the current index
         TabView(selection: $currentBannerIndex) {
             // 3. Iterate over the indices so we have an exact integer to tag
             ForEach(banners.indices, id: \.self) { index in
                 let banner = banners[index]
-                
+
                 Group {
                     if let url = URL(string: banner.banner) {
                         KFImage(url)
@@ -338,8 +338,8 @@ struct HeaderCategoryButtons: View {
     let imageUrl: String
     let category: String
     let categotyId: Int
-    
-    
+
+
     var body: some View {
         NavigationLink(value: SeeAllNavigationContext(title: category, categoryId: categotyId)) {
             VStack(spacing: 8) {
@@ -347,7 +347,7 @@ struct HeaderCategoryButtons: View {
                     Circle()
                         .fill(.white)
                         .frame(width: 50, height: 50)
-                    
+
                     KFImage(URL(string: imageUrl))
                         .placeholder {
                             ProgressView().scaleEffect(0.8)
@@ -360,9 +360,9 @@ struct HeaderCategoryButtons: View {
                         .resizable()
                         .scaledToFit()
                         .frame(width: 25, height: 25)
-                    
+
                 }
-                
+
                 Text(category)
                     .font(.system(size: 11, weight: .medium))
                     .foregroundStyle(.white)
@@ -378,40 +378,40 @@ struct ProductModule: View {
     let title: String
     let products: [FeaturedSectionData]
     let moduleId: Int
-    
+
     let showCategories: Bool
     let categories: [FeaturedCategoryItem]
-    
+
     var onOptionTap: ((FeaturedSectionData) -> Void)?
-    
+
     let isLoading: Bool
-    
-    
+
+
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 Text(title)
                     .font(.system(size: 18, weight: .semibold))
                     .foregroundStyle(Color.black)
-                
+
                 Spacer()
-                
+
                 NavigationLink(value: SeeAllNavigationContext(title: title, moduleId: moduleId)) {
                     HStack(spacing: 4) {
                         Text("See all")
                             .font(.system(size: 14, weight: .regular))
                             .foregroundStyle(Color(hex: "#53B175"))
-                        
+
                         Image(systemName: "chevron.right")
                             .font(.system(size: 12, weight: .regular))
                             .foregroundStyle(Color(hex: "#53B175"))
                     }
                 }
                 .buttonStyle(.plain)
-                
+
             }
             .padding(.horizontal, 16)
-            
+
             if showCategories && !categories.isEmpty {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 8) {
@@ -440,21 +440,21 @@ struct ProductModule: View {
                 }
                 .padding(.vertical, -8)
             }
-            
+
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 12) {
                     ForEach(products) { product in
                         let availableVariants = product.variants.filter { $0.variantRecordType != "default" }
-                        
+
                         let variantToShow = availableVariants.first(where: { String($0.variantId) == product.variantIdToShow }) ?? availableVariants.first
                         let actualOptionsCount = availableVariants.count
-                        
+
                         let packQty = (variantToShow?.packQty.isEmpty == false) ? variantToShow!.packQty : (availableVariants.first?.packQty ?? "")
-                        
+
                         let packQtyVal = Double(packQty) ?? 0.0
                         let stockVal = Double("\(product.totalStock)") ?? 0.0
                         let isVariantOutOfStock = packQtyVal > stockVal
-                        
+
                         NavigationLink(value: ProductNavigationContext(
                             product: product,
                             relatedProducts: products,
@@ -492,30 +492,30 @@ struct ProductModule: View {
 struct BrandGridModule: View {
     let title: String
     let brands: [FeaturedBrandItem]
-    
+
     let columns = [
         GridItem(.flexible(), spacing: 16),
         GridItem(.flexible(), spacing: 16),
         GridItem(.flexible(), spacing: 16),
         GridItem(.flexible(), spacing: 16)
     ]
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            
+
             HStack {
                 Text(title)
                     .font(.system(size: 18, weight: .semibold))
                     .foregroundStyle(Color.black)
-                
+
                 Spacer()
-                
+
                 NavigationLink(value: AppRoute.seeAllBrands) {
                     HStack(spacing: 4) {
                         Text("See all")
                             .font(.system(size: 14, weight: .regular))
                             .foregroundStyle(Color(hex: "#53B175"))
-                        
+
                         Image(systemName: "chevron.right")
                             .font(.system(size: 12, weight: .regular))
                             .foregroundStyle(Color(hex: "#53B175"))
@@ -524,10 +524,10 @@ struct BrandGridModule: View {
                 .buttonStyle(.plain)
             }
             .padding(.horizontal, 16)
-            
+
             LazyVGrid(columns: columns, spacing: 20) {
                 ForEach(brands.prefix(12), id: \.brandId) { brand in
-                    
+
                     NavigationLink(value: BrandProductNavigationContext(brandId: Int(brand.id) ?? 49)) {
                         VStack(spacing: 8) {
                             KFImage(URL(string: brand.image))
@@ -551,8 +551,8 @@ struct BrandGridModule: View {
                                     Circle()
                                         .stroke(Color.gray.opacity(0.2), lineWidth: 1)
                                 )
-                            
-                            
+
+
                             Text(brand.brandName)
                                 .font(.system(size: 12, weight: .medium))
                                 .foregroundStyle(Color.black)
