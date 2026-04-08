@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SkeletonHeuristics {
-    
+
     static func inferKind(from frame: CGRect) -> SkeletonKind {
         if frame.height < 20 {
             return .text(lineHeight: frame.height)
@@ -18,7 +18,7 @@ struct SkeletonHeuristics {
             return .generic
         }
     }
-    
+
     static func defaultCornerRadius(for kind: SkeletonKind) -> CGFloat {
         switch kind {
         case .text(let h):
@@ -29,7 +29,7 @@ struct SkeletonHeuristics {
             return 8
         }
     }
-    
+
     static func defaultShapeStyle(for kind: SkeletonKind, cornerRadius: CGFloat) -> SkeletonShapeStyle {
         switch kind {
         case .text:
@@ -38,7 +38,7 @@ struct SkeletonHeuristics {
             return .roundedRectangle(cornerRadius: cornerRadius)
         }
     }
-    
+
     static func resolveShapeStyle(
         preferred: SkeletonShapeStyle,
         kind: SkeletonKind,

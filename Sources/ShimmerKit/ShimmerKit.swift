@@ -4,10 +4,10 @@
 import SwiftUI
 
 public enum ShimmerKit {
-    
+
     /// Default shimmer configuration
     public static let defaultConfig = ShimmerConfig()
-    
+
     /// Create a configuration from a preset profile.
     public static func config(_ profile: ShimmerProfile) -> ShimmerConfig {
         switch profile {
@@ -57,7 +57,7 @@ public enum ShimmerKit {
             )
         }
     }
-    
+
     /// Create a custom shimmer configuration
     public static func config(
         gradient: Gradient = Gradient(colors: [
@@ -84,7 +84,7 @@ public enum ShimmerKit {
             useLayoutProtocolIntegration: useLayoutProtocolIntegration
         )
     }
-    
+
     /// Create a shimmer configuration using a single shimmer highlight color.
     public static func config(
         shimmerColor: Color,

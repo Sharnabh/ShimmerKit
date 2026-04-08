@@ -43,5 +43,3 @@ struct ShowcaseHomeView: View {
         .navigationTitle("ShimmerKit Showcase")
     }
 }
-
-

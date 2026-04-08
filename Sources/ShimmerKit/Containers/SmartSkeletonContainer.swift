@@ -12,13 +12,13 @@ struct SmartSkeletonContainer<Content: View>: View {
         let id: String
         let node: SkeletonNode
     }
-    
+
     let content: Content
     let config: ShimmerConfig
     let includeScopes: Set<String>?
-    
+
     @State private var nodes: [SkeletonNode] = []
-    
+
     init(
         config: ShimmerConfig = ShimmerConfig(),
         includeScopes: [String]? = nil,
@@ -28,7 +28,7 @@ struct SmartSkeletonContainer<Content: View>: View {
         self.config = config
         self.includeScopes = includeScopes.map(Set.init)
     }
-    
+
     var body: some View {
         ZStack(alignment: .topLeading) {
             contentLayer
@@ -37,7 +37,7 @@ struct SmartSkeletonContainer<Content: View>: View {
             GeometryReader { proxy in
                 let containerFrame = proxy.frame(in: .global)
                 let containerSize = proxy.size
-                
+
                 ZStack(alignment: .topLeading) {
                     ForEach(renderNodes) { renderNode in
                         let node = renderNode.node
@@ -45,7 +45,7 @@ struct SmartSkeletonContainer<Content: View>: View {
                             dx: -containerFrame.minX,
                             dy: -containerFrame.minY
                         )
-                        
+
                         SkeletonShapeBuilder.shape(for: node)
                             .fill(config.skeletonColor)
                             .frame(width: localFrame.width, height: localFrame.height)
@@ -63,7 +63,7 @@ struct SmartSkeletonContainer<Content: View>: View {
                                         dx: -containerFrame.minX,
                                         dy: -containerFrame.minY
                                     )
-                                    
+
                                     SkeletonShapeBuilder.shape(for: node)
                                         .fill(Color.white)
                                         .frame(width: localFrame.width, height: localFrame.height)
@@ -81,7 +81,7 @@ struct SmartSkeletonContainer<Content: View>: View {
             }
         }
     }
-    
+
     @ViewBuilder
     private var contentLayer: some View {
         if config.useLayoutProtocolIntegration {
@@ -92,10 +92,10 @@ struct SmartSkeletonContainer<Content: View>: View {
             content.hiddenForSkeleton(true)
         }
     }
-    
+
     private var processedNodes: [SkeletonNode] {
         let nodesToRender: [SkeletonNode]
-        
+
         if let includeScopes {
             nodesToRender = nodes.filter { node in
                 guard let scope = node.scope else { return false }
@@ -104,7 +104,7 @@ struct SmartSkeletonContainer<Content: View>: View {
         } else {
             nodesToRender = nodes
         }
-        
+
         let merged = SkeletonProcessor.process(nodesToRender)
         return SkeletonGrouping.groupTextLines(
             merged,
@@ -112,10 +112,10 @@ struct SmartSkeletonContainer<Content: View>: View {
             enableSemanticGrouping: config.enableSemanticGrouping
         )
     }
-    
+
     private var renderNodes: [RenderSkeletonNode] {
         var occurrencesByID: [String: Int] = [:]
-        
+
         return processedNodes.map { node in
             let occurrence = occurrencesByID[node.id, default: 0]
             occurrencesByID[node.id] = occurrence + 1
@@ -123,7 +123,7 @@ struct SmartSkeletonContainer<Content: View>: View {
             return RenderSkeletonNode(id: renderID, node: node)
         }
     }
-    
+
     // private func normalizeNodes(_ input: [SkeletonNode]) -> [SkeletonNode] {
     //     input.sorted { lhs, rhs in
     //         if lhs.id != rhs.id {
@@ -158,7 +158,7 @@ struct SmartSkeletonContainer<Content: View>: View {
                 return lhs.frame.height < rhs.frame.height
             }
             // Use ID as the final fallback for deterministic sorting
-            return lhs.id < rhs.id 
+            return lhs.id < rhs.id
         }
     }
 }
