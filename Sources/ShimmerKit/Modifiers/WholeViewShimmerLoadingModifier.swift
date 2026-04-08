@@ -7,25 +7,30 @@
 
 import SwiftUI
 
-struct WholeViewShimmerLoadingModifier<Placeholder: View>: ViewModifier {
+struct WholeViewShimmerLoadingModifier<Placeholder: View, Background: View>: ViewModifier {
     let isLoading: Bool
     let config: ShimmerConfig
+    let background: Background
     let placeholder: Placeholder
 
     func body(content: Content) -> some View {
         content
             .opacity(isLoading ? 0 : 1)
             .allowsHitTesting(!isLoading)
-            .overlay {
+            .overlay(alignment: .topLeading) {
                 if isLoading {
-                    placeholder
-                        .overlay {
-                            GeometryReader { proxy in
-                                ShimmerRenderer(config: config)
-                                    .frame(width: proxy.size.width, height: proxy.size.height)
-                                    .mask(placeholder)
+                    ZStack(alignment: .topLeading) {
+                        background
+                        placeholder
+                            .overlay {
+                                GeometryReader { proxy in
+                                    ShimmerRenderer(config: config)
+                                        .frame(width: proxy.size.width, height: proxy.size.height)
+                                        .mask(placeholder)
+                                }
                             }
-                        }
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
                 }
             }
     }

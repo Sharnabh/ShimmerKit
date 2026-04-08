@@ -7,7 +7,26 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
-## [1.2.1] - 2026-03-22
+## [1.2.2] - 2026-04-08
+
+### Added
+- New whole-view loading API `shimmerLoading(_:config:placeholder:)` to fully replace content with a custom shimmer placeholder while loading.
+- New controller-driven API `shimmerLoading(_:config:placeholder:)` overload that accepts `ShimmerLoadingController` for shared loading state.
+- New background-layer overloads for whole-view loading:
+	- `shimmerLoading(_:config:background:placeholder:)`
+	- `shimmerLoading(_:config:background:placeholder:)` with `ShimmerLoadingController`
+- New `ShimmerLoadingController` type with async helpers:
+	- `run(_:)` for single async workflows
+	- `runTaskGroup(of:returning:body:)` for task-group workflows
+	- `runThrowingTaskGroup(of:returning:body:)` for throwing task groups
+- New showcase screen for whole-view loading with both Task and TaskGroup examples.
+
+### Changed
+- Showcase app now demonstrates root-level shimmer rendering driven by a shared loading controller, so child-view async work can present loading from the home/app container.
+- Whole-view loading now keeps original content mounted (hidden) during loading, preventing unintended `.task` cancellation while still rendering only the loading UI.
+- Whole-view loading overlay/background composition now uses top-leading alignment for predictable top anchoring.
+
+## [1.2.1] - 2026-04-08
 
 ### Added
 - New whole-view loading API `shimmerLoading(_:config:placeholder:)` to fully replace content with a custom shimmer placeholder while loading.
@@ -80,7 +99,10 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - Public `smartSkeleton`, `skeletonNode`, and `skeletonID` APIs.
 - Swift Package Manager support.
 
-[Unreleased]: https://github.com/Sharnabh/ShimmerKit/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/Sharnabh/ShimmerKit/compare/v1.2.2...HEAD
+[1.2.2]: https://github.com/Sharnabh/ShimmerKit/releases/tag/v1.2.2
+[1.2.1]: https://github.com/Sharnabh/ShimmerKit/releases/tag/v1.2.1
+[1.1.1]: https://github.com/Sharnabh/ShimmerKit/releases/tag/v1.1.1
 [1.0.1]: https://github.com/Sharnabh/ShimmerKit/releases/tag/v1.0.1
 [1.0.0]: https://github.com/Sharnabh/ShimmerKit/releases/tag/v1.0.0
 [0.1.0]: https://github.com/Sharnabh/ShimmerKit/releases/tag/v0.1.0
